@@ -1,8 +1,8 @@
 import React, {useState, useCallback, useRef} from 'react';
 import produce from 'immer'
 
-  const numRows = 25;
-  const numCols = 25;
+  const numRows = 30;
+  const numCols = 50;
 
   const operations = [
     [0, 1],
@@ -62,7 +62,7 @@ const  App: React.FC = () => {
       });
       
       
-    setTimeout(runSimulation, 100);
+    setTimeout(runSimulation, 16.6667);
     },[]);
 
   return (
@@ -86,7 +86,7 @@ const  App: React.FC = () => {
     <button onClick= {() => {
       const rows = [];
     for (let i = 0; i < numRows; i++) {
-      rows.push(Array.from(Array(numCols), () => Math.random() > .9 ? 1 : 0))
+      rows.push(Array.from(Array(numCols), () => Math.random() > .6 ? 1 : 0))
     }
       setGrid(rows);
     }}
@@ -114,7 +114,7 @@ const  App: React.FC = () => {
     style={{
      width: 20, 
       height: 20, 
-      backgroundColor: grid[i][j] ? 'orange' : undefined,
+      backgroundColor: grid[i][j] ? 'red' : undefined,
       border: "solid 1px black"
    }}
    />
