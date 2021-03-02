@@ -1,8 +1,8 @@
 import React, {useState, useCallback, useRef} from 'react';
 import produce from 'immer'
 
-  const numRows = 100;
-  const numCols = 100;
+  const numRows = 25;
+  const numCols = 25;
 
   const operations = [
     [0, 1],
@@ -15,18 +15,21 @@ import produce from 'immer'
     [-1, 0]
   ]
 
-const  App: React.FC = () => {
-  const [grid, setGrid] = useState(() => {
+  const generateEmptyGrid = () => {
     const rows = [];
     for (let i = 0; i < numRows; i++) {
       rows.push(Array.from(Array(numCols), () => 0))
     }
-
     return rows;
+  }
+
+const  App: React.FC = () => {
+  const [grid, setGrid] = useState(() => {
+    return generateEmptyGrid()
   });  
   const [running, setRunning] = useState(false);
 
-  const runningRef = useRef();
+  const runningRef = useRef(running);
   runningRef.current = running
 
   const runSimulation = useCallback(() => {
@@ -42,7 +45,7 @@ const  App: React.FC = () => {
               let neighbours = 0;
               operations.forEach(([x,y]) => {
                   const newI = i + x;
-                  const newJ = i + y;
+                  const newJ = j + y;
                   if (newI >= 0 && newI < numRows && newJ >= 0 && newJ < numCols){
                     neighbours += g[newI][newJ]
                   }
@@ -74,6 +77,23 @@ const  App: React.FC = () => {
       }
     
      }> {running ? 'stop' : 'start'}</button>
+
+     <button onClick={() => {
+       
+       setGrid(generateEmptyGrid())
+     }} 
+     >clear </button>
+    <button onClick= {() => {
+      const rows = [];
+    for (let i = 0; i < numRows; i++) {
+      rows.push(Array.from(Array(numCols), () => Math.random() > .9 ? 1 : 0))
+    }
+      setGrid(rows);
+    }}
+     >random
+     </button>
+
+
   <div
     style= {{
      display: 'grid',
